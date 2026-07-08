@@ -157,7 +157,7 @@
             border: 1px solid var(--border); 
             overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: block;
-            aspect-ratio: 3 / 4; /* Стандартная журнальная вертикальная пропорция на ПК */
+            aspect-ratio: 3 / 4; 
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
@@ -177,16 +177,11 @@
         }
         .gallery-item:hover img { transform: scale(1.03); }
         
-        /* На ПК парное фото полноразмерное вертикальное, без обрезки */
-        .gallery-item.pair-work img {
-            object-position: center top; 
-        }
-        
-        /* ОБНОВЛЕННЫЕ НАДПИСИ: Текст загорается значительно позже (задержка 0.7s) */
+        /* Базовое расположение надписи (на ПК — всегда внизу кадра) */
         .gallery-label {
             position: absolute;
             bottom: 15px; left: 15px; right: 15px;
-            background: rgba(30, 30, 35, 0.25); /* Прозрачный легкий фон */
+            background: rgba(30, 30, 35, 0.25); 
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -202,7 +197,7 @@
             
             opacity: 0;
             transform: translateY(10px);
-            /* Увеличенная задержка (0.7s) гарантирует появление только после полного раскрытия фото */
+            /* Журнальная задержка на ПК */
             transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s, transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s;
         }
         
@@ -239,7 +234,7 @@
         .btn-disk.active { opacity: 1; transform: scale(1) translateY(0); }
         .btn-disk.active.settled:hover { transform: translateY(-4px); background: var(--accent-hover); border-color: rgba(163,0,0,0.8); box-shadow: 0 15px 35px rgba(139, 0, 0, 0.35); }
         
-        /* СТИЛЬНАЯ КНОПКА СВЯЗИ */
+        /* КНОПКА СВЯЗИ */
         .sticky-tg {
             position: fixed;
             bottom: 30px; right: 30px; 
@@ -285,7 +280,7 @@
             
             .gallery-grid { grid-template-columns: 1fr; gap: 35px; } 
             
-            /* ТОЛЬКО НА МОБИЛЬНЫХ: квадратное кадрирование парной съемки (держим низ, режем верх) */
+            /* Квадратное кадрирование парной съемки на телефонах */
             .gallery-item.pair-work {
                 aspect-ratio: 1 / 1 !important;
             }
@@ -293,16 +288,17 @@
                 object-position: center bottom !important; 
             }
 
-            /* ТОЛЬКО НА МОБИЛЬНЫХ: перенос выбранных подписей НАВЕРХ кадра */
-            .gallery-item.label-top .gallery-label {
-                bottom: auto !important;
-                top: 15px !important;
-                box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
-            }
-            
+            /* ЖЕЛЕЗОБЕТОННО: Все надписи на мобильных закреплены ВВЕРХУ кадра */
             .gallery-label { 
-                font-size: 0.9rem; padding: 10px 14px; 
-                bottom: 12px; left: 12px; right: 12px;
+                font-size: 0.9rem; 
+                padding: 10px 14px; 
+                left: 12px; right: 12px;
+                bottom: auto !important;
+                top: 12px !important;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+                
+                /* Оптимальная быстрая задержка появления */
+                transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s;
             }
             
             .offer-section, .rules-section { padding: 40px 0 20px; }
@@ -363,7 +359,7 @@
                 </div>
                 <div class="b2b-card scroll-reveal">
                     <h3>Каталоги & Лукбуки</h3>
-                    <p>Позиционирование мужской одежды категорий Casual, Business и Premium для федеральных маркетплейсов, интернет-магазинов и брендовых каталогов. Техничная, быстрая отработка ростовых планов.</p>
+                    <p>Позиционирование мужской одежды категорий Casual, Business и Premium для federal маркетплейсов, интернет-магазинов и брендовых каталогов. Техничная, быстрая отработка ростовых планов.</p>
                     <span class="highlight">Lookbook / Каталоги / Маркетплейсы</span>
                 </div>
             </div>
@@ -398,12 +394,13 @@
             
             <div class="gallery-grid" id="gallery-container">
                 
-                <div class="gallery-item label-top" data-row="1">
+                <!-- Ряд 1 -->
+                <div class="gallery-item" data-row="1">
                     <img src="0002.jpeg" alt="Ростовой план">
                     <div class="gallery-label">Ростовой план / Casual стиль</div>
                 </div>
 
-                <div class="gallery-item label-top" data-row="1">
+                <div class="gallery-item" data-row="1">
                     <img src="0181.jpg" alt="Коммерческий портрет">
                     <div class="gallery-label">Мужской образ / Smile-тест</div>
                 </div>
@@ -413,7 +410,8 @@
                     <div class="gallery-label">Семейная съёмка / Сюжетный кадр</div>
                 </div>
                 
-                <div class="gallery-item pair-work label-top" data-row="2">
+                <!-- Ряд 2 -->
+                <div class="gallery-item pair-work" data-row="2">
                     <img src="19.jpeg" alt="Модельные тесты">
                     <div class="gallery-label">Модельные тесты / Работа в паре</div>
                 </div>
@@ -428,6 +426,7 @@
                     <div class="gallery-label">Классический жилет / Бизнес стиль</div>
                 </div>
 
+                <!-- Ряд 3 -->
                 <div class="gallery-item" data-row="3">
                     <img src="13.jpg" alt="Творческие проекты">
                     <div class="gallery-label">Творческие проекты / Эмоции</div>
@@ -476,7 +475,7 @@
     </footer>
  
     <script>
-        // Параметры на смартфонах
+        // Анимация параметров на смартфонах
         window.addEventListener('scroll', () => {
             if (window.innerWidth <= 768) {
                 const paramsBlock = document.getElementById('model-params');
@@ -488,7 +487,7 @@
             }
         });
 
-        // Базовый трекер для простых блоков
+        // Базовый трекер для текстовых карточек и секций (двусторонний)
         const baseObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 const card = entry.target;
@@ -509,7 +508,7 @@
  
         document.querySelectorAll('.hero.fade-in, .offer-section .fade-in, .b2b-card, .rules-section .fade-in, .rule-card, .final-contact').forEach((el) => baseObserver.observe(el));
 
-        // Наблюдатель заголовка портфолио
+        // Наблюдатель за заголовком портфолио
         const headerObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) entry.target.classList.add('visible');
@@ -518,7 +517,7 @@
         }, {threshold: 0.1});
         headerObserver.observe(document.getElementById('port-head'));
 
-        // Кастомный трекер для фотогалереи
+        // ОПТИМИЗИРОВАННЫЙ ТРЕКЕР ДЛЯ ГАЛЕРЕИ (БЕЗ ДРЕБЕЗГА И СБРОСА)
         const isMobile = window.innerWidth <= 768;
         const galleryObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -527,13 +526,13 @@
                 if (entry.isIntersecting) {
                     if (el.classList.contains('gallery-item')) {
                         if (!isMobile) {
-                            // На ПК раскрываем сразу горизонтальный ряд целиком
+                            // На ПК раскрываем рядами
                             const rowNum = el.getAttribute('data-row');
                             document.querySelectorAll(`.gallery-item[data-row="${rowNum}"]`).forEach(item => {
                                 item.classList.add('visible');
                             });
                         } else {
-                            // На мобильных — строго по одной фотографии по мере докрутки
+                            // На смартфонах — поштучно
                             el.classList.add('visible');
                         }
                     }
@@ -541,20 +540,16 @@
                         el.classList.add('active');
                     }
                 } else {
-                    if (el.classList.contains('gallery-item')) {
-                        el.classList.remove('visible');
-                    }
-                    // Умное поведение кнопки Яндекс Диска при обратном скролле
+                    // Умное поведение: убираем сброс видимости .gallery-item при скролле вверх.
+                    // Теперь фотографии остаются видимыми и не мерцают.
                     if (el.id === 'disk-button' && entry.boundingClientRect.top > 0) {
                         el.classList.remove('active');
                     }
                 }
             });
         }, {
-            // На мобильных увеличиваем порог (threshold) и ставим нижний отступ, 
-            // чтобы анимация запускалась позже, когда фото раскрылось на экране
-            rootMargin: isMobile ? '0px 0px -100px 0px' : '0px 0px -10px 0px',
-            threshold: isMobile ? 0.45 : 0.15
+            rootMargin: isMobile ? '0px 0px -60px 0px' : '0px 0px -10px 0px',
+            threshold: isMobile ? 0.3 : 0.15
         });
 
         document.querySelectorAll('.gallery-item, #disk-button').forEach(item => galleryObserver.observe(item));
