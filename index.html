@@ -38,6 +38,7 @@
         h1, h2, h3, h4, .brand-item { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
  
+        /* Базовая плавная анимация появления элементов */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -132,11 +133,10 @@
  
         /* 4. ПОРТФОЛИО */
         .portfolio-section { padding: 80px 0 60px; border-top: 1px solid var(--border); }
-        
-        .portfolio-header { text-align: center; margin-bottom: 50px; }
+        .portfolio-header { text-align: center; margin-bottom: 50px; opacity: 0; transform: translateY(20px); transition: all 0.8s ease; }
+        .portfolio-header.visible { opacity: 1; transform: translateY(0); }
         .portfolio-header h2 { font-size: 2.3rem; font-weight: 500; display: block; margin-bottom: 10px; }
         
-        /* Крупный и заметный подзаголовок ЛОКАЦИИ И РАКУРСЫ */
         .portfolio-subtitle { 
             font-family: 'Manrope', sans-serif;
             font-size: 1.05rem; 
@@ -147,6 +147,7 @@
             display: block;
         }
 
+        /* Настройка сетки галереи */
         .gallery-grid { 
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
@@ -154,13 +155,24 @@
             margin-bottom: 45px; 
         }
         
+        /* Стили контейнера фотографии */
         .gallery-item {
             background: #0f0f11;
             border: 1px solid var(--border); 
             overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: block;
             aspect-ratio: 3 / 4; 
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        
+        /* Состояние проявленной фотографии */
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .gallery-item img { 
             width: 100%;
             height: 100%; display: block; 
@@ -170,14 +182,22 @@
         }
         .gallery-item:hover img { transform: scale(1.03); }
         
-        /* ПРЕМИАЛЬНАЯ СЕРАЯ СТЕКЛЯННАЯ РАМОЧКА ДЛЯ НАДПИСЕЙ */
+        /* ИСПРАВЛЕНИЕ: Жёсткое кадрирование парной съёмки (держим низ, режем верх) */
+        .gallery-item.pair-work {
+            aspect-ratio: 1 / 1 !important; 
+        }
+        .gallery-item.pair-work img {
+            object-position: center bottom !important; /* Сохраняет нижнюю композицию, обрезка уходит наверх */
+        }
+        
+        /* ИСПРАВЛЕНИЕ ПОДПИСИ: Фон стал значительно прозрачнее (0.25) */
         .gallery-label {
             position: absolute;
             bottom: 15px; left: 15px; right: 15px;
-            background: rgba(30, 30, 35, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(30, 30, 35, 0.25); /* Повышенная прозрачность для открытия деталей фото */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 12px 18px; 
             border-radius: 12px;
             font-family: 'Oswald', sans-serif; 
@@ -186,7 +206,18 @@
             text-transform: uppercase; 
             color: #ffffff;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            
+            /* Скрыто по умолчанию для реализации пошагового эффекта */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s; /* Задержка 0.4 сек, пока встает фото */
+        }
+        
+        /* Проявление подписи следом за фото */
+        .gallery-item.visible .gallery-label {
+            opacity: 1;
+            transform: translateY(0);
         }
  
         /* ПОЛУПРОЗРАЧНАЯ КРАСНАЯ КНОПКА ЯНДЕКС ДИСКА */
@@ -253,7 +284,6 @@
             .hero { flex-direction: column-reverse; padding: 20px 0 40px; text-align: center; gap: 25px; min-height: auto; }
             .hero-image { height: 55vh; width: 100%; border-radius: 20px; }
             
-            /* Скрываем параметры на самом старте до скролла */
             .parameters { 
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px 25px; 
@@ -266,7 +296,7 @@
             
             /* КРУПНЫЕ ФОТОГРАФИИ ПО ОДНОЙ ШТУКЕ В РЯД */
             .gallery-grid { 
-                grid-template-columns: 1fr; gap: 25px; 
+                grid-template-columns: 1fr; gap: 35px; 
             } 
             
             .gallery-label { 
@@ -274,24 +304,14 @@
                 bottom: 12px; left: 12px; right: 12px;
             }
             
-            /* ИСПРАВЛЕННАЯ логика для парного фото: квадратная область + фокус на лицах (не режет верх кадра) */
-            .gallery-item.pair-work {
-                aspect-ratio: 1 / 1 !important;
-            }
-            .gallery-item.pair-work img {
-                object-position: center top !important; /* Жёстко держим верх кадра, чтобы лица не срезались */
-            }
-            
             .offer-section, .rules-section { padding: 40px 0 20px; }
             .section-title { font-size: 1.6rem; }
             
-            /* КОНТАКТЫ ДРУГ ПОД ДРУГОМ В ТРИ СТРОЧКИ */
             .contact-links {
                 flex-direction: column; align-items: center;
                 gap: 20px;
             }
             
-            /* Аккуратная белая кнопка связи справа внизу, компактная, не на весь экран */
             .sticky-tg { 
                 bottom: 20px; right: 20px;
                 left: auto; 
@@ -375,55 +395,55 @@
             </div>
         </section>
  
-        <section class="portfolio-section fade-in">
-            <div class="portfolio-header">
+        <section class="portfolio-section">
+            <div class="portfolio-header" id="port-head">
                 <h2>Портфолио</h2>
                 <div class="portfolio-subtitle">Локации и Ракурсы</div>
             </div>
             
-            <div class="gallery-grid">
+            <div class="gallery-grid" id="gallery-container">
                 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="1">
                     <img src="0002.jpeg" alt="Ростовой план">
                     <div class="gallery-label">Ростовой план / Casual стиль</div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="1">
                     <img src="0181.jpg" alt="Коммерческий портрет">
                     <div class="gallery-label">Мужской образ / Smile-тест</div>
                 </div>
                 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="1">
                     <img src="21.jpg" alt="Семейная съёмка">
                     <div class="gallery-label">Семейная съёмка / Сюжетный кадр</div>
                 </div>
                 
-                <div class="gallery-item pair-work">
+                <div class="gallery-item pair-work" data-row="2">
                     <img src="19.jpeg" alt="Модельные тесты">
                     <div class="gallery-label">Модельные тесты / Работа в паре</div>
                 </div>
                 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="2">
                     <img src="4.jpg" alt="Парное позирование">
                     <div class="gallery-label">Love Story съёмка / Позирование</div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="2">
                     <img src="24.jpg" alt="Бизнес стиль">
                     <div class="gallery-label">Классический жилет / Бизнес стиль</div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="3">
                     <img src="13.jpg" alt="Творческие проекты">
                     <div class="gallery-label">Творческие проекты / Эмоции</div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="3">
                     <img src="12.jpg" alt="Студийный портрет">
                     <div class="gallery-label">Студийный портрет / Мужской образ</div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-row="3">
                     <img src="Основное.jpeg" alt="Премиальный портрет">
                     <div class="gallery-label">Премиальный портрет / Букинг</div>
                 </div>
@@ -431,7 +451,7 @@
             </div>
  
             <div class="disk-center">
-                <a href="https://disk.yandex.ru/d/6d5U1MCmrh4i4w" target="_blank" class="btn-disk scroll-reveal">
+                <a href="https://disk.yandex.ru/d/6d5U1MCmrh4i4w" target="_blank" class="btn-disk scroll-reveal" id="disk-button">
                     <div class="btn-title">
                         <span>Полное портфолио</span>
                         <svg viewBox="0 0 24 24">
@@ -473,38 +493,76 @@
             }
         });
 
-        // Трекер анимаций блоков
-        const observer = new IntersectionObserver((entries) => {
+        // Базовый трекер для простых блоков (Hero, b2b-карточки, контакты)
+        const baseObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 const card = entry.target;
-                
                 if (entry.isIntersecting) {
-                    if (card.classList.contains('fade-in')) {
-                        card.classList.add('visible');
-                    }
+                    if (card.classList.contains('fade-in')) card.classList.add('visible');
                     if (card.classList.contains('scroll-reveal')) {
                         card.classList.add('active');
-                        setTimeout(() => {
-                            if (card.classList.contains('active')) {
-                                card.classList.add('settled');
-                            }
-                        }, 800);
+                        setTimeout(() => { if (card.classList.contains('active')) card.classList.add('settled'); }, 800);
                     }
                 } else {
-                    if (card.classList.contains('fade-in')) {
-                        card.classList.remove('visible');
-                    }
-                    if (card.classList.contains('scroll-reveal')) {
+                    if (card.classList.contains('fade-in')) card.classList.remove('visible');
+                    if (card.classList.contains('scroll-reveal') && card.id !== 'disk-button') {
                         card.classList.remove('active', 'settled');
                     }
                 }
             });
-        }, { 
-            rootMargin: '0px 0px -20px 0px',
-            threshold: 0.1 
-        });
+        }, { rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
  
-        document.querySelectorAll('.fade-in, .scroll-reveal').forEach((el) => observer.observe(el));
+        document.querySelectorAll('.hero.fade-in, .offer-section .fade-in, .b2b-card, .rules-section .fade-in, .rule-card, .final-contact').forEach((el) => baseObserver.observe(el));
+
+        // ИЗОЛИРОВАННОЕ УПРАВЛЕНИЕ СЕКЦИЕЙ ПОРТФОЛИО
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('visible');
+                else entry.target.classList.remove('visible');
+            });
+        }, {threshold: 0.1});
+        headerObserver.observe(document.getElementById('port-head'));
+
+        // Кастомный умный трекер появления для фото и кнопок
+        const galleryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const el = entry.target;
+                const isMobile = window.innerWidth <= 768;
+
+                if (entry.isIntersecting) {
+                    if (el.classList.contains('gallery-item')) {
+                        if (!isMobile) {
+                            // На ПК проявляем весь ряд одновременно
+                            const rowNum = el.getAttribute('data-row');
+                            document.querySelectorAll(`.gallery-item[data-row="${rowNum}"]`).forEach(item => {
+                                item.classList.add('visible');
+                            });
+                        } else {
+                            // На мобильных каждая карточка идет независимо
+                            el.classList.add('visible');
+                        }
+                    }
+                    if (el.id === 'disk-button') {
+                        el.classList.add('active');
+                    }
+                } else {
+                    // Скрытие элементов при уходе из видимости
+                    if (el.classList.contains('gallery-item')) {
+                        el.classList.remove('visible');
+                    }
+                    // Если листаем снизу вверх, кнопка держится стабильно, либо перевызывается раньше картинок
+                    if (el.id === 'disk-button' && entry.boundingClientRect.top > 0) {
+                        el.classList.remove('active');
+                    }
+                }
+            });
+        }, {
+            rootMargin: '0px 0px -10px 0px',
+            threshold: 0.15
+        });
+
+        // Привязываем наблюдатель к галерее и кнопке диска
+        document.querySelectorAll('.gallery-item, #disk-button').forEach(item => galleryObserver.observe(item));
     </script>
  
 </body>
