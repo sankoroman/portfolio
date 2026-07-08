@@ -47,25 +47,29 @@
  
         /* 1. ГЛАВНЫЙ ЭКРАН */
         .hero {
-            display: flex; min-height: 100vh; align-items: center;
+            display: flex;
+            min-height: 100vh; align-items: center;
             border-bottom: 1px solid var(--border); padding: 60px 0; gap: 50px;
         }
         .hero-text { flex: 1.1; }
         .hero-image { 
-            flex: 0.9; height: 70vh; background: #0d0d0f; border: 1px solid var(--border);
-            overflow: hidden; border-radius: 24px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8); position: relative;
+            flex: 0.9;
+            height: 70vh; background: #0d0d0f; border: 1px solid var(--border);
+            overflow: hidden; border-radius: 24px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+            position: relative;
         }
         .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
         
         .city-tag {
-            font-size: 0.75rem; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 15px;
+            font-size: 0.75rem;
+            letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 15px;
             display: inline-block; text-transform: uppercase; font-weight: 400;
         }
         .hero-text h1 { font-size: clamp(2.8rem, 5.5vw, 4.5rem); line-height: 1.1; margin-bottom: 35px; font-weight: 600; }
  
         /* ПАРАМЕТРЫ С ЭФФЕКТОМ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ДЛЯ МОБИЛЬНЫХ */
         .parameters {
-            display: grid; 
+            display: grid;
             grid-template-columns: repeat(4, 1fr); 
             gap: 15px;
             margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid var(--border);
@@ -78,19 +82,22 @@
         /* 2. ФОРМАТЫ СОТРУДНИЧЕСТВА */
         .offer-section { padding: 90px 0 60px; }
         .section-title {
-            font-size: 2.2rem; margin-bottom: 10px; border-bottom: 2px solid var(--text-main);
+            font-size: 2.2rem;
+            margin-bottom: 10px; border-bottom: 2px solid var(--text-main);
             padding-bottom: 10px; display: inline-block; font-weight: 400;
         }
         .b2b-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
  
         .b2b-card {
-            background: rgba(20, 20, 25, 0.0); border: 1px solid rgba(255, 255, 255, 0.02);
+            background: rgba(20, 20, 25, 0.0);
+            border: 1px solid rgba(255, 255, 255, 0.02);
             padding: 40px 35px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; text-align: center;
             opacity: 0; transform: translateY(45px); backdrop-filter: blur(0px) saturate(100%); -webkit-backdrop-filter: blur(0px) saturate(100%);
             transition: opacity 0.5s ease, transform 0.5s ease, background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
         }
         .b2b-card.active {
-            opacity: 1; transform: translateY(0); background: rgba(20, 20, 25, 0.45); border-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
+            opacity: 1;
+            transform: translateY(0); background: rgba(20, 20, 25, 0.45); border-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
             transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), background 0.5s ease, border-color 0.5s ease;
         }
         .b2b-card.active.settled { border-color: var(--border); box-shadow: none; transition: border-color 0.8s ease, background 0.5s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
@@ -105,12 +112,15 @@
         .rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         
         .rule-card { 
-            padding: 40px 35px; border-radius: 20px; background: rgba(20, 20, 25, 0.0); border: 1px solid rgba(255, 255, 255, 0.02);
-            opacity: 0; transform: translateY(45px); backdrop-filter: blur(0px) saturate(100%); -webkit-backdrop-filter: blur(0px) saturate(100%);
+            padding: 40px 35px;
+            border-radius: 20px; background: rgba(20, 20, 25, 0.0); border: 1px solid rgba(255, 255, 255, 0.02);
+            opacity: 0; transform: translateY(45px);
+            backdrop-filter: blur(0px) saturate(100%); -webkit-backdrop-filter: blur(0px) saturate(100%);
             transition: opacity 0.5s ease, transform 0.5s ease, background 0.5s ease, border-color 0.5s ease;
         }
         .rule-card.active {
-            opacity: 1; transform: translateY(0); background: rgba(20, 20, 25, 0.45); border-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
+            opacity: 1;
+            transform: translateY(0); background: rgba(20, 20, 25, 0.45); border-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
             transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), background 0.5s ease, border-color 0.5s ease;
         }
         .rule-card.active.settled { border-color: var(--border); box-shadow: none; transition: border-color 0.8s ease, background 0.5s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
@@ -128,7 +138,7 @@
         
         /* Крупный и заметный подзаголовок ЛОКАЦИИ И РАКУРСЫ */
         .portfolio-subtitle { 
-            font-family: 'Manrope', sans-serif; 
+            font-family: 'Manrope', sans-serif;
             font-size: 1.05rem; 
             color: rgba(255, 255, 255, 0.5); 
             font-weight: 400; 
@@ -145,22 +155,24 @@
         }
         
         .gallery-item {
-            background: #0f0f11; border: 1px solid var(--border); 
+            background: #0f0f11;
+            border: 1px solid var(--border); 
             overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: block;
             aspect-ratio: 3 / 4; 
         }
         .gallery-item img { 
-            width: 100%; height: 100%; display: block; 
+            width: 100%;
+            height: 100%; display: block; 
             object-fit: cover; 
             object-position: center top;
-            transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .gallery-item:hover img { transform: scale(1.03); }
         
         /* ПРЕМИАЛЬНАЯ СЕРАЯ СТЕКЛЯННАЯ РАМОЧКА ДЛЯ НАДПИСЕЙ */
         .gallery-label {
-            position: absolute; 
+            position: absolute;
             bottom: 15px; left: 15px; right: 15px;
             background: rgba(30, 30, 35, 0.65);
             backdrop-filter: blur(12px);
@@ -170,7 +182,7 @@
             border-radius: 12px;
             font-family: 'Oswald', sans-serif; 
             font-size: 0.95rem; 
-            letter-spacing: 1px; 
+            letter-spacing: 1px;
             text-transform: uppercase; 
             color: #ffffff;
             text-align: center;
@@ -180,7 +192,8 @@
         /* ПОЛУПРОЗРАЧНАЯ КРАСНАЯ КНОПКА ЯНДЕКС ДИСКА */
         .disk-center { text-align: center; margin-top: 60px; }
         .btn-disk {
-            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+            display: inline-flex;
+            flex-direction: column; align-items: center; justify-content: center;
             padding: 20px 55px; border-radius: 30px; 
             background: var(--accent-color); 
             border: 1px solid var(--accent-border);
@@ -190,11 +203,13 @@
             transition: all 0.4s ease;
         }
         .btn-disk .btn-title {
-            font-family: 'Oswald', sans-serif; font-size: 1.15rem; text-transform: uppercase;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem; text-transform: uppercase;
             letter-spacing: 2px; font-weight: 500; line-height: 1.2; display: flex; align-items: center; gap: 10px;
         }
         .btn-disk .btn-subtitle {
-            font-family: 'Manrope', sans-serif; font-size: 0.75rem; text-transform: lowercase;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.75rem; text-transform: lowercase;
             letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); margin-top: 4px; font-weight: 400;
         }
         .btn-disk svg { width: 16px; height: 16px; fill: #fff; }
@@ -204,13 +219,15 @@
         
         /* КНОПКА СВЯЗИ — СТИЛЬНЫЙ БЕЛЫЙ ГЛАСС-ДИЗАЙН, ОНА СПРАВА И ГОРИТ ВСЕГДА */
         .sticky-tg {
-            position: fixed; bottom: 30px; right: 30px; 
+            position: fixed;
+            bottom: 30px; right: 30px; 
             background: var(--glass-bg); 
             color: var(--text-main);
             border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             padding: 14px 30px; border-radius: 30px; font-family: 'Oswald', sans-serif; text-transform: uppercase;
-            font-size: 0.9rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 10px;
+            font-size: 0.9rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center;
+            gap: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); z-index: 9999 !important; letter-spacing: 1px; transition: all 0.3s;
         }
         .sticky-tg:hover { background: var(--glass-hover); border-color: rgba(255,255,255,0.25); transform: translateY(-3px); }
@@ -238,29 +255,26 @@
             
             /* Скрываем параметры на самом старте до скролла */
             .parameters { 
-                grid-template-columns: repeat(2, 1fr); 
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px 25px; 
                 opacity: 0; 
                 transform: translateY(20px); 
             }
             .parameters.revealed {
-                opacity: 1;
-                transform: translateY(0);
+                opacity: 1; transform: translateY(0);
             }
             
             /* КРУПНЫЕ ФОТОГРАФИИ ПО ОДНОЙ ШТУКЕ В РЯД */
             .gallery-grid { 
-                grid-template-columns: 1fr; 
-                gap: 25px; 
+                grid-template-columns: 1fr; gap: 25px; 
             } 
             
             .gallery-label { 
-                font-size: 0.9rem; 
-                padding: 10px 14px; 
+                font-size: 0.9rem; padding: 10px 14px; 
                 bottom: 12px; left: 12px; right: 12px;
             }
             
-            /* 4-я КАРТОЧКА: Исправленная идеальная обрезка верха (фокус на лицах) */
+            /* ИСПРАВЛЕННАЯ логика для парного фото: квадратная область + фокус на лицах (не режет верх кадра) */
             .gallery-item.pair-work {
                 aspect-ratio: 1 / 1 !important;
             }
@@ -273,15 +287,13 @@
             
             /* КОНТАКТЫ ДРУГ ПОД ДРУГОМ В ТРИ СТРОЧКИ */
             .contact-links {
-                flex-direction: column;
-                align-items: center;
+                flex-direction: column; align-items: center;
                 gap: 20px;
             }
             
             /* Аккуратная белая кнопка связи справа внизу, компактная, не на весь экран */
             .sticky-tg { 
-                bottom: 20px; 
-                right: 20px;
+                bottom: 20px; right: 20px;
                 left: auto; 
                 padding: 12px 24px; 
                 width: auto;
