@@ -158,14 +158,10 @@
             overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: block;
             aspect-ratio: 3 / 4; 
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        .gallery-item.visible {
+            
+            /* На ПК картинки видны СРАЗУ, без задержек */
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
         
         .gallery-item img { 
@@ -177,7 +173,7 @@
         }
         .gallery-item:hover img { transform: scale(1.03); }
         
-        /* Базовое расположение надписи (на ПК — всегда внизу кадра) */
+        /* Базовое расположение надписи (на ПК — всегда внизу кадра и видна сразу) */
         .gallery-label {
             position: absolute;
             bottom: 15px; left: 15px; right: 15px;
@@ -195,15 +191,9 @@
             text-align: center;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             
-            opacity: 0;
-            transform: translateY(10px);
-            /* Журнальная задержка на ПК */
-            transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s, transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s;
-        }
-        
-        .gallery-item.visible .gallery-label {
+            /* На ПК без эффектов скрытия */
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
  
         /* КНОПКА ЯНДЕКС ДИСКА */
@@ -280,6 +270,17 @@
             
             .gallery-grid { grid-template-columns: 1fr; gap: 35px; } 
             
+            /* Анимация проявления карточек на смартфонах */
+            .gallery-item {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            .gallery-item.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
             /* Квадратное кадрирование парной съемки на телефонах */
             .gallery-item.pair-work {
                 aspect-ratio: 1 / 1 !important;
@@ -288,7 +289,7 @@
                 object-position: center bottom !important; 
             }
 
-            /* ЖЕЛЕЗОБЕТОННО: Все надписи на мобильных закреплены ВВЕРХУ кадра */
+            /* НАДПИСИ НА ТЕЛЕФОНАХ: СТРОГО ВВЕРХУ И МАКСИМАЛЬНО ПЛАВНО */
             .gallery-label { 
                 font-size: 0.9rem; 
                 padding: 10px 14px; 
@@ -297,8 +298,16 @@
                 top: 12px !important;
                 box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
                 
-                /* Оптимальная быстрая задержка появления */
-                transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s;
+                opacity: 0;
+                transform: translateY(-5px);
+                
+                /* Длительность 1.4s и мягкая кривая делают появление очень благородным и неспешным */
+                transition: opacity 1.4s cubic-bezier(0.215, 0.610, 0.355, 1) 0.4s, transform 1.4s cubic-bezier(0.215, 0.610, 0.355, 1) 0.4s;
+            }
+            
+            .gallery-item.visible .gallery-label {
+                opacity: 1;
+                transform: translateY(0);
             }
             
             .offer-section, .rules-section { padding: 40px 0 20px; }
@@ -475,9 +484,11 @@
     </footer>
  
     <script>
+        const isMobile = window.innerWidth <= 768;
+
         // Анимация параметров на смартфонах
         window.addEventListener('scroll', () => {
-            if (window.innerWidth <= 768) {
+            if (isMobile) {
                 const paramsBlock = document.getElementById('model-params');
                 if (window.scrollY > 45) {
                     paramsBlock.classList.add('revealed');
@@ -517,42 +528,42 @@
         }, {threshold: 0.1});
         headerObserver.observe(document.getElementById('port-head'));
 
-        // ОПТИМИЗИРОВАННЫЙ ТРЕКЕР ДЛЯ ГАЛЕРЕИ (БЕЗ ДРЕБЕЗГА И СБРОСА)
-        const isMobile = window.innerWidth <= 768;
-        const galleryObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const el = entry.target;
-
-                if (entry.isIntersecting) {
-                    if (el.classList.contains('gallery-item')) {
-                        if (!isMobile) {
-                            // На ПК раскрываем рядами
-                            const rowNum = el.getAttribute('data-row');
-                            document.querySelectorAll(`.gallery-item[data-row="${rowNum}"]`).forEach(item => {
-                                item.classList.add('visible');
-                            });
-                        } else {
-                            // На смартфонах — поштучно
+        // ОПТИМИЗИРОВАННЫЙ ТРЕКЕР ДЛЯ ГАЛЕРЕИ (РАБОТАЕТ ТОЛЬКО НА МОБИЛЬНЫХ)
+        if (isMobile) {
+            const galleryObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const el = entry.target;
+                    if (entry.isIntersecting) {
+                        if (el.classList.contains('gallery-item')) {
                             el.classList.add('visible');
                         }
+                        if (el.id === 'disk-button') {
+                            el.classList.add('active');
+                        }
+                    } else {
+                        if (el.id === 'disk-button' && entry.boundingClientRect.top > 0) {
+                            el.classList.remove('active');
+                        }
                     }
-                    if (el.id === 'disk-button') {
-                        el.classList.add('active');
-                    }
-                } else {
-                    // Умное поведение: убираем сброс видимости .gallery-item при скролле вверх.
-                    // Теперь фотографии остаются видимыми и не мерцают.
-                    if (el.id === 'disk-button' && entry.boundingClientRect.top > 0) {
-                        el.classList.remove('active');
-                    }
-                }
+                });
+            }, {
+                rootMargin: '0px 0px -60px 0px',
+                threshold: 0.2
             });
-        }, {
-            rootMargin: isMobile ? '0px 0px -60px 0px' : '0px 0px -10px 0px',
-            threshold: isMobile ? 0.3 : 0.15
-        });
 
-        document.querySelectorAll('.gallery-item, #disk-button').forEach(item => galleryObserver.observe(item));
+            document.querySelectorAll('.gallery-item, #disk-button').forEach(item => galleryObserver.observe(item));
+        } else {
+            // На ПК просто активируем кнопку диска при подходе
+            const diskObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        setTimeout(() => entry.target.classList.add('settled'), 600);
+                    }
+                });
+            }, { threshold: 0.1 });
+            diskObserver.observe(document.getElementById('disk-button'));
+        }
     </script>
  
 </body>
