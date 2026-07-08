@@ -4,82 +4,496 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Роман Санько | Commercial & Premium Model</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+ 
     <style>
-        :root { --bg: #030303; --text: #FFFFFF; --accent: rgba(139, 0, 0, 0.35); }
-        body { font-family: 'Manrope', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+        :root {
+            --bg: #030303;
+            --text-main: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.45);
+            --border: rgba(255, 255, 255, 0.07);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(20px) saturate(140%);
+            --glass-hover: rgba(255, 255, 255, 0.15);
+            --accent-color: rgba(139, 0, 0, 0.35); /* Полупрозрачный глубокий рубиновый */
+            --accent-hover: rgba(163, 0, 0, 0.6);
+            --accent-border: rgba(139, 0, 0, 0.5);
+        }
+ 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+ 
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+ 
+        h1, h2, h3, h4, .brand-item { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        /* Анимация появления */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .portfolio-section { padding: 80px 0; }
+ 
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+ 
+        /* 1. ГЛАВНЫЙ ЭКРАН */
+        .hero {
+            display: flex; min-height: 100vh; align-items: center;
+            border-bottom: 1px solid var(--border); padding: 60px 0; gap: 50px;
+        }
+        .hero-text { flex: 1.1; }
+        .hero-image { 
+            flex: 0.9; height: 70vh; background: #0d0d0f; border: 1px solid var(--border);
+            overflow: hidden; border-radius: 24px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8); position: relative;
+        }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+        
+        .city-tag {
+            font-size: 0.75rem; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 15px;
+            display: inline-block; text-transform: uppercase; font-weight: 400;
+        }
+        .hero-text h1 { font-size: clamp(2.8rem, 5.5vw, 4.5rem); line-height: 1.1; margin-bottom: 35px; font-weight: 600; }
+ 
+        /* ПАРАМЕТРЫ С ЭФФЕКТОМ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ДЛЯ МОБИЛЬНЫХ */
+        .parameters {
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 15px;
+            margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid var(--border);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .param-item span { display: block; font-size: 0.68rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+        .param-item strong { font-size: clamp(0.9rem, 1.5vw, 1.15rem); font-weight: 400; font-family: 'Oswald', sans-serif; white-space: nowrap; }
+        .hero-text p { font-size: 1.02rem; color: #E5E5EA; max-width: 95%; font-weight: 300; }
+ 
+        /* 2. ФОРМАТЫ СОТРУДНИЧЕСТВА */
+        .offer-section { padding: 90px 0 60px; }
+        .section-title {
+            font-size: 2.2rem; margin-bottom: 10px; border-bottom: 2px solid var(--text-main);
+            padding-bottom: 10px; display: inline-block; font-weight: 400;
+        }
+        .b2b-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+ 
+        .b2b-card {
+            background: rgba(20, 20, 25, 0.0); border: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 40px 35px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; text-align: center;
+            opacity: 0; transform: translateY(45px); backdrop-filter: blur(0px) saturate(100%); -webkit-backdrop-filter: blur(0px) saturate(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease, background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .b2b-card.active {
+            opacity: 1; transform: translateY(0); background: rgba(20, 20, 25, 0.45); border-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
+            transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), background 0.5s ease, border-color 0.5s ease;
+        }
+        .b2b-card.active.settled { border-color: var(--border); box-shadow: none; transition: border-color 0.8s ease, background 0.5s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .b2b-card.active.settled:hover { border-color: rgba(255,255,255,0.15); background: rgba(30, 30, 35, 0.6); transform: translateY(-5px); }
+        
+        .b2b-card h3 { font-size: 1.35rem; margin-bottom: 18px; font-weight: 400; color: #fff; }
+        .b2b-card p { color: #D1D1D6; font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
+        .highlight { color: var(--text-main); font-weight: 400; font-size: 0.85rem; display: block; margin-top: 25px; border-top: 1px solid var(--border); padding-top: 18px; font-family: 'Oswald', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+ 
+        /* 3. СТАНДАРТЫ РАБОТЫ */
+        .rules-section { padding: 40px 0 90px; }
+        .rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        
+        .rule-card { 
+            padding: 40px 35px; border-radius: 20px; background: rgba(20, 20, 25, 0.0); border: 1px solid rgba(255, 255, 255, 0.02);
+            opacity: 0; transform: translateY(45px); backdrop-filter: blur(0px) saturate(100%); -webkit-backdrop-filter: blur(0px) saturate(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease, background 0.5s ease, border-color 0.5s ease;
+        }
+        .rule-card.active {
+            opacity: 1; transform: translateY(0); background: rgba(20, 20, 25, 0.45); border-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
+            transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), background 0.5s ease, border-color 0.5s ease;
+        }
+        .rule-card.active.settled { border-color: var(--border); box-shadow: none; transition: border-color 0.8s ease, background 0.5s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .rule-card.active.settled:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-4px); background: rgba(30, 30, 35, 0.6); }
+ 
+        .rule-number { font-family: 'Oswald', sans-serif; font-size: 2.5rem; color: rgba(255,255,255,0.06); line-height: 1; margin-bottom: 15px; font-weight: 600; }
+        .rule-card h4 { font-size: 1.2rem; margin-bottom: 12px; letter-spacing: 0.5px; font-weight: 400; }
+        .rule-card p { color: rgba(255,255,255,0.6); font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
+ 
+        /* 4. ПОРТФОЛИО */
+        .portfolio-section { padding: 80px 0 60px; border-top: 1px solid var(--border); }
+        
         .portfolio-header { text-align: center; margin-bottom: 50px; }
+        .portfolio-header h2 { font-size: 2.3rem; font-weight: 500; display: block; margin-bottom: 10px; }
         
-        /* Сетка галереи */
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .gallery-item { position: relative; background: #111; border-radius: 16px; overflow: hidden; aspect-ratio: 3/4; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-        
-        /* Светлая прозрачная подпись */
-        .gallery-label {
-            position: absolute; bottom: 20px; left: 20px; right: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 12px; border-radius: 10px;
-            text-align: center; font-family: 'Oswald'; text-transform: uppercase;
-            transition: opacity 0.6s ease;
+        /* Крупный и заметный подзаголовок ЛОКАЦИИ И РАКУРСЫ */
+        .portfolio-subtitle { 
+            font-family: 'Manrope', sans-serif; 
+            font-size: 1.05rem; 
+            color: rgba(255, 255, 255, 0.5); 
+            font-weight: 400; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
         }
 
-        .btn-disk { display: inline-block; padding: 20px 40px; background: var(--accent); color: white; text-decoration: none; border-radius: 30px; font-family: 'Oswald'; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* Мобильная адаптация */
+        .gallery-grid { 
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px; 
+            margin-bottom: 45px; 
+        }
+        
+        .gallery-item {
+            background: #0f0f11; border: 1px solid var(--border); 
+            overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            display: block;
+            aspect-ratio: 3 / 4; 
+        }
+        .gallery-item img { 
+            width: 100%; height: 100%; display: block; 
+            object-fit: cover; 
+            object-position: center top;
+            transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+        .gallery-item:hover img { transform: scale(1.03); }
+        
+        /* ПРЕМИАЛЬНАЯ СЕРАЯ СТЕКЛЯННАЯ РАМОЧКА ДЛЯ НАДПИСЕЙ */
+        .gallery-label {
+            position: absolute; 
+            bottom: 15px; left: 15px; right: 15px;
+            background: rgba(30, 30, 35, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 18px; 
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif; 
+            font-size: 0.95rem; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            color: #ffffff;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+ 
+        /* ПОЛУПРОЗРАЧНАЯ КРАСНАЯ КНОПКА ЯНДЕКС ДИСКА */
+        .disk-center { text-align: center; margin-top: 60px; }
+        .btn-disk {
+            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px 55px; border-radius: 30px; 
+            background: var(--accent-color); 
+            border: 1px solid var(--accent-border);
+            color: #ffffff;
+            text-decoration: none; position: relative; opacity: 0; transform: scale(0.92) translateY(20px);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.15);
+            transition: all 0.4s ease;
+        }
+        .btn-disk .btn-title {
+            font-family: 'Oswald', sans-serif; font-size: 1.15rem; text-transform: uppercase;
+            letter-spacing: 2px; font-weight: 500; line-height: 1.2; display: flex; align-items: center; gap: 10px;
+        }
+        .btn-disk .btn-subtitle {
+            font-family: 'Manrope', sans-serif; font-size: 0.75rem; text-transform: lowercase;
+            letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); margin-top: 4px; font-weight: 400;
+        }
+        .btn-disk svg { width: 16px; height: 16px; fill: #fff; }
+ 
+        .btn-disk.active { opacity: 1; transform: scale(1) translateY(0); }
+        .btn-disk.active.settled:hover { transform: translateY(-4px); background: var(--accent-hover); border-color: rgba(163,0,0,0.8); box-shadow: 0 15px 35px rgba(139, 0, 0, 0.35); }
+        
+        /* КНОПКА СВЯЗИ — СТИЛЬНЫЙ БЕЛЫЙ ГЛАСС-ДИЗАЙН, ОНА СПРАВА И ГОРИТ ВСЕГДА */
+        .sticky-tg {
+            position: fixed; bottom: 30px; right: 30px; 
+            background: var(--glass-bg); 
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            padding: 14px 30px; border-radius: 30px; font-family: 'Oswald', sans-serif; text-transform: uppercase;
+            font-size: 0.9rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); z-index: 9999 !important; letter-spacing: 1px; transition: all 0.3s;
+        }
+        .sticky-tg:hover { background: var(--glass-hover); border-color: rgba(255,255,255,0.25); transform: translateY(-3px); }
+        .sticky-tg svg { width: 16px; height: 16px; fill: currentColor; }
+ 
+        /* КОНТАКТЫ */
+        .final-contact { text-align: center; padding: 90px 0; border-top: 1px solid var(--border); margin-top: 40px; }
+        .final-contact h2 { font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 25px; font-weight: 400; letter-spacing: 2px; }
+        .final-contact p { color: rgba(255,255,255,0.6); margin-bottom: 50px; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto; font-weight: 300; }
+        .contact-links { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .contact-links a { color: var(--text-main); text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 400; }
+        .contact-links a:hover { color: var(--text-muted); }
+ 
+        footer { text-align: center; padding: 35px; color: #3a3a3c; font-size: 0.78rem; border-top: 1px solid #111; letter-spacing: 1px; }
+ 
+        @media (max-width: 1100px) {
+            .b2b-grid, .rules-grid { grid-template-columns: 1fr; gap: 20px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); } 
+        }
+        
+        /* МОБИЛЬНАЯ ВЕРСИЯ СИТУАТИВНОГО ДИЗАЙНА */
         @media (max-width: 768px) {
-            .gallery-grid { grid-template-columns: 1fr; }
-            .gallery-label { opacity: 0; }
-            .gallery-label.show { opacity: 1; }
+            .hero { flex-direction: column-reverse; padding: 20px 0 40px; text-align: center; gap: 25px; min-height: auto; }
+            .hero-image { height: 55vh; width: 100%; border-radius: 20px; }
+            
+            /* Скрываем параметры на самом старте до скролла */
+            .parameters { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px 25px; 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            .parameters.revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            /* КРУПНЫЕ ФОТОГРАФИИ ПО ОДНОЙ ШТУКЕ В РЯД */
+            .gallery-grid { 
+                grid-template-columns: 1fr; 
+                gap: 25px; 
+            } 
+            
+            .gallery-label { 
+                font-size: 0.9rem; 
+                padding: 10px 14px; 
+                bottom: 12px; left: 12px; right: 12px;
+            }
+            
+            /* 4-я КАРТОЧКА: Исправленная идеальная обрезка верха (фокус на лицах) */
+            .gallery-item.pair-work {
+                aspect-ratio: 1 / 1 !important;
+            }
+            .gallery-item.pair-work img {
+                object-position: center top !important; /* Жёстко держим верх кадра, чтобы лица не срезались */
+            }
+            
+            .offer-section, .rules-section { padding: 40px 0 20px; }
+            .section-title { font-size: 1.6rem; }
+            
+            /* КОНТАКТЫ ДРУГ ПОД ДРУГОМ В ТРИ СТРОЧКИ */
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            /* Аккуратная белая кнопка связи справа внизу, компактная, не на весь экран */
+            .sticky-tg { 
+                bottom: 20px; 
+                right: 20px;
+                left: auto; 
+                padding: 12px 24px; 
+                width: auto;
+                font-size: 0.85rem;
+            }
+            .disk-center { margin-top: 30px; }
+            .btn-disk { width: 100%; padding: 18px 20px; }
         }
     </style>
 </head>
 <body>
+ 
+    <a href="https://t.me/sankoroman" target="_blank" class="sticky-tg">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.94-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Сотрудничество
+    </a>
+ 
     <div class="container">
-        <section class="portfolio-section">
-            <div class="portfolio-header reveal">
-                <h2 style="font-family: 'Oswald'; font-size: 2.5rem; text-transform: uppercase;">Портфолио</h2>
-                <div style="color: rgba(255,255,255,0.5); letter-spacing: 2px;">Локации и Ракурсы</div>
+        
+        <header class="hero fade-in">
+            <div class="hero-text">
+                <div class="city-tag">Новосибирск / Москва / Международные b2b проекты</div>
+                <h1>Роман<br>Санько</h1>
+                
+                <div class="parameters" id="model-params">
+                    <div class="param-item"><span>Рост</span><strong>183 см</strong></div>
+                    <div class="param-item"><span>Одежда</span><strong>XL (52-54)</strong></div>
+                    <div class="param-item"><span>Обувь</span><strong>43 (27.5 см)</strong></div>
+                    <div class="param-item"><span>Типаж</span><strong>Commercial / Premium</strong></div>
+                </div>
+ 
+                <p>Профессиональное представление брендов в сегментах Premium, Commercial и Promo. Опыт в банковской сфере, включая руководство подразделениями корпоративного кредитования, обеспечивает глубокое понимание бизнес-этики, развитые ораторские навыки, структурированную речь и способность выступать ключевым амбассадором бренда на статусных b2b-платформах и масштабных форумах.</p>
             </div>
             
-            <div class="gallery-grid" id="gallery">
-                <div class="gallery-item reveal"><img src="0002.jpeg"><div class="gallery-label">Ростовой план</div></div>
-                <div class="gallery-item reveal"><img src="0181.jpg"><div class="gallery-label">Smile-тест</div></div>
-                <div class="gallery-item reveal"><img src="21.jpg"><div class="gallery-label">Семейная съёмка</div></div>
-                <div class="gallery-item reveal"><img src="19.jpeg"><div class="gallery-label">Работа в паре</div></div>
+            <div class="hero-image">
+                <img src="Основное.jpeg" alt="Роман Санько">
             </div>
-
-            <div class="reveal" style="text-align: center; margin-top: 50px;">
-                <a href="https://disk.yandex.ru/d/6d5U1MCmrh4i4w" class="btn-disk">Полное портфолио</a>
+        </header>
+ 
+        <section class="offer-section">
+            <div style="text-align: center;"><h2 class="section-title fade-in">Форматы сотрудничества</h2></div>
+            <div class="b2b-grid">
+                <div class="b2b-card scroll-reveal">
+                    <h3>Амбассадор & Промо-Модель</h3>
+                    <p>Статусное представительство бренда на VIP-мероприятиях, конгрессах, презентациях и выставках. Грамотное ведение b2b-диалогов на уровне топ-менеджмента, глубокое погружение в концепцию заказчика и удержание внимания аудитории.</p>
+                    <span class="highlight">Выставки / Форумы / Конгрессы</span>
+                </div>
+                <div class="b2b-card scroll-reveal">
+                    <h3>Имиджевая реклама & Кампейны</h3>
+                    <p>Создание визуального образа успеха, надежности и стабильности для financial сектора, застройщиков, премиальных часов, автомобилей и мужских аксессуаров. Точное выполнение задач съемочной команды.</p>
+                    <span class="highlight">Реклама банков / Финтех / Premium</span>
+                </div>
+                <div class="b2b-card scroll-reveal">
+                    <h3>Каталоги & Лукбуки</h3>
+                    <p>Позиционирование мужской одежды категорий Casual, Business и Premium для федеральных маркетплейсов, интернет-магазинов и брендовых catalogs. Техничная, быстрая отработка ростовых планов.</p>
+                    <span class="highlight">Lookbook / Каталоги / Маркетплейсы</span>
+                </div>
             </div>
         </section>
-    </div>
+ 
+        <section class="rules-section">
+            <div style="text-align: center;"><h2 class="section-title fade-in">Стандарты работы на площадке</h2></div>
+            <div class="rules-grid">
+                <div class="rule-card scroll-reveal">
+                    <div class="rule-number">01</div>
+                    <h4>EQ и Речевая культура</h4>
+                    <p>Свободное венение дискуссии, поставленный голос, грамотность речи. Эффективная работа с пулом b2b-клиентов на стендах компании.</p>
+                </div>
+                <div class="rule-card scroll-reveal">
+                    <div class="rule-number">02</div>
+                    <h4>Бизнес-дисциплина</h4>
+                    <p>Прибытие на съемочную или выставочную локацию за 10–15 минут до назначенного времени. Соблюдение регламента, субординации и тайминга.</p>
+                </div>
+                <div class="rule-card scroll-reveal">
+                    <div class="rule-number">03</div>
+                    <h4>Стабильная форма</h4>
+                    <p>Ухоженность, соответствие параметров портфолио. Отсутствие резких изменений внешности. Готовность к интенсивному графику работы.</p>
+                </div>
+            </div>
+        </section>
+ 
+        <section class="portfolio-section fade-in">
+            <div class="portfolio-header">
+                <h2>Портфолио</h2>
+                <div class="portfolio-subtitle">Локации и Ракурсы</div>
+            </div>
+            
+            <div class="gallery-grid">
+                
+                <div class="gallery-item">
+                    <img src="0002.jpeg" alt="Ростовой план">
+                    <div class="gallery-label">Ростовой план / Casual стиль</div>
+                </div>
 
+                <div class="gallery-item">
+                    <img src="0181.jpg" alt="Коммерческий портрет">
+                    <div class="gallery-label">Мужской образ / Smile-тест</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="21.jpg" alt="Семейная съёмка">
+                    <div class="gallery-label">Семейная съёмка / Сюжетный кадр</div>
+                </div>
+                
+                <div class="gallery-item pair-work">
+                    <img src="19.jpeg" alt="Модельные тесты">
+                    <div class="gallery-label">Модельные тесты / Работа в паре</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="4.jpg" alt="Парное позирование">
+                    <div class="gallery-label">Love Story съёмка / Позирование</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="24.jpg" alt="Бизнес стиль">
+                    <div class="gallery-label">Классический жилет / Бизнес стиль</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="13.jpg" alt="Творческие проекты">
+                    <div class="gallery-label">Творческие проекты / Эмоции</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="12.jpg" alt="Студийный портрет">
+                    <div class="gallery-label">Студийный портрет / Мужской образ</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Основное.jpeg" alt="Премиальный портрет">
+                    <div class="gallery-label">Премиальный портрет / Букинг</div>
+                </div>
+
+            </div>
+ 
+            <div class="disk-center">
+                <a href="https://disk.yandex.ru/d/6d5U1MCmrh4i4w" target="_blank" class="btn-disk scroll-reveal">
+                    <div class="btn-title">
+                        <span>Полное портфолио</span>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/>
+                        </svg>
+                    </div>
+                    <div class="btn-subtitle">[бэкстейдж] / тесты / полные съёмки</div>
+                </a>
+            </div>
+        </section>
+ 
+        <section class="final-contact fade-in">
+            <h2>ИНВЕСТИРУЙТЕ В ИНТЕЛЛЕКТУАЛЬНЫЙ СТАТУС ВАШЕГО БРЕНДА</h2>
+            <p>Открыт для предложений по коммерческим съёмкам, каталогам, а также представлению интересов компании в качестве Brand Ambassador.</p>
+            
+            <div class="contact-links">
+                <a href="https://instagram.com/mr__deeds" target="_blank">Instagram</a>
+                <a href="https://t.me/sankoroman" target="_blank">Telegram</a>
+                <a href="tel:89133878070">8 (913) 387-80-70</a>
+            </div>
+        </section>
+ 
+    </div>
+ 
+    <footer>
+        <p>&copy; 2026 Роман Санько. Premium Commercial & Promo Model. B2B Portfolio.</p>
+    </footer>
+ 
     <script>
+        // Появление параметров при скролле на смартфонах
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const paramsBlock = document.getElementById('model-params');
+                if (window.scrollY > 45) {
+                    paramsBlock.classList.add('revealed');
+                } else {
+                    paramsBlock.classList.remove('revealed');
+                }
+            }
+        });
+
+        // Трекер анимаций блоков
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry) => {
+                const card = entry.target;
+                
                 if (entry.isIntersecting) {
-                    const el = entry.target;
-                    el.classList.add('active');
-                    
-                    if (window.innerWidth <= 768 && el.classList.contains('gallery-item')) {
+                    if (card.classList.contains('fade-in')) {
+                        card.classList.add('visible');
+                    }
+                    if (card.classList.contains('scroll-reveal')) {
+                        card.classList.add('active');
                         setTimeout(() => {
-                            el.querySelector('.gallery-label').classList.add('show');
-                        }, 500);
+                            if (card.classList.contains('active')) {
+                                card.classList.add('settled');
+                            }
+                        }, 800);
+                    }
+                } else {
+                    if (card.classList.contains('fade-in')) {
+                        card.classList.remove('visible');
+                    }
+                    if (card.classList.contains('scroll-reveal')) {
+                        card.classList.remove('active', 'settled');
                     }
                 }
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }, { 
+            rootMargin: '0px 0px -20px 0px',
+            threshold: 0.1 
+        });
+ 
+        document.querySelectorAll('.fade-in, .scroll-reveal').forEach((el) => observer.observe(el));
     </script>
+ 
 </body>
 </html>
