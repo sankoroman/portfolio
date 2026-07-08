@@ -120,18 +120,21 @@
         .rule-card h4 { font-size: 1.2rem; margin-bottom: 12px; letter-spacing: 0.5px; font-weight: 400; }
         .rule-card p { color: rgba(255,255,255,0.6); font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
  
-        /* 4. ПОРТФОЛИО С СУПЕР-СТИЛЬНЫМ ДВУХУРОВНЕВЫМ ЗАГОЛОВКОМ */
+        /* 4. ПОРТФОЛИО */
         .portfolio-section { padding: 80px 0 60px; border-top: 1px solid var(--border); }
         
         .portfolio-header { text-align: center; margin-bottom: 50px; }
-        .portfolio-header h2 { font-size: 2.3rem; font-weight: 500; display: block; margin-bottom: 6px; }
+        .portfolio-header h2 { font-size: 2.3rem; font-weight: 500; display: block; margin-bottom: 10px; }
+        
+        /* Крупный и заметный подзаголовок ЛОКАЦИИ И РАКУРСЫ */
         .portfolio-subtitle { 
             font-family: 'Manrope', sans-serif; 
-            font-size: 0.95rem; 
-            color: rgba(255, 255, 255, 0.4); 
-            font-weight: 300; 
-            letter-spacing: 1px;
-            text-transform: none;
+            font-size: 1.05rem; 
+            color: rgba(255, 255, 255, 0.5); 
+            font-weight: 400; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
         }
 
         .gallery-grid { 
@@ -155,11 +158,23 @@
         }
         .gallery-item:hover img { transform: scale(1.03); }
         
+        /* ПРЕМИАЛЬНАЯ СЕРАЯ СТЕКЛЯННАЯ РАМОЧКА ДЛЯ НАДПИСЕЙ */
         .gallery-label {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9)); 
-            padding: 30px 15px 15px 15px; font-family: 'Oswald', sans-serif; 
-            font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; color: #fff;
+            position: absolute; 
+            bottom: 15px; left: 15px; right: 15px;
+            background: rgba(30, 30, 35, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 18px; 
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif; 
+            font-size: 0.95rem; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            color: #ffffff;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
  
         /* ПОЛУПРОЗРАЧНАЯ КРАСНАЯ КНОПКА ЯНДЕКС ДИСКА */
@@ -235,17 +250,22 @@
             
             /* КРУПНЫЕ ФОТОГРАФИИ ПО ОДНОЙ ШТУКЕ В РЯД */
             .gallery-grid { 
-                grid-template-columns: 1fr; /* 1 колонка — фото идут в ряд по одной штуке крупно */
+                grid-template-columns: 1fr; 
                 gap: 25px; 
             } 
-            .gallery-label { font-size: 0.95rem; padding: 20px 12px 12px 12px; }
             
-            /* 4-я КАРТОЧКА: Работа в паре (квадрат с обрезкой пустоты сверху) */
+            .gallery-label { 
+                font-size: 0.9rem; 
+                padding: 10px 14px; 
+                bottom: 12px; left: 12px; right: 12px;
+            }
+            
+            /* 4-я КАРТОЧКА: Исправленная идеальная обрезка верха (фокус на лицах) */
             .gallery-item.pair-work {
                 aspect-ratio: 1 / 1 !important;
             }
             .gallery-item.pair-work img {
-                object-position: center 15% !important; 
+                object-position: center top !important; /* Жёстко держим верх кадра, чтобы лица не срезались */
             }
             
             .offer-section, .rules-section { padding: 40px 0 20px; }
@@ -262,7 +282,7 @@
             .sticky-tg { 
                 bottom: 20px; 
                 right: 20px;
-                left: auto; /* убираем растягивание */
+                left: auto; 
                 padding: 12px 24px; 
                 width: auto;
                 font-size: 0.85rem;
@@ -328,7 +348,7 @@
                 <div class="rule-card scroll-reveal">
                     <div class="rule-number">01</div>
                     <h4>EQ и Речевая культура</h4>
-                    <p>Свободное ведение дискуссии, поставленный голос, грамотность речи. Эффективная работа с пулом b2b-клиентов на стендах компании.</p>
+                    <p>Свободное венение дискуссии, поставленный голос, грамотность речи. Эффективная работа с пулом b2b-клиентов на стендах компании.</p>
                 </div>
                 <div class="rule-card scroll-reveal">
                     <div class="rule-number">02</div>
