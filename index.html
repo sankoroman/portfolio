@@ -15,9 +15,11 @@
             --text-main: #FFFFFF;
             --text-muted: rgba(255, 255, 255, 0.45);
             --border: rgba(255, 255, 255, 0.07);
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(20, 20, 25, 0.45);
             --glass-blur: blur(20px) saturate(140%);
-            --glass-hover: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(30, 30, 35, 0.6);
+            --accent-color: #8b0000; /* Рубиновый акцент */
+            --accent-hover: #a30000;
         }
  
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,34 +56,24 @@
         }
         .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
         
-        /* Локация над именем */
         .city-tag {
             font-size: 0.75rem; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 15px;
             display: inline-block; text-transform: uppercase; font-weight: 400;
         }
         .hero-text h1 { font-size: clamp(2.8rem, 5.5vw, 4.5rem); line-height: 1.1; margin-bottom: 35px; font-weight: 600; }
  
+        /* ПАРАМЕТРЫ С ЭФФЕКТОМ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ДЛЯ МОБИЛЬНЫХ */
         .parameters {
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
             gap: 15px;
             margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid var(--border);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
         .param-item span { display: block; font-size: 0.68rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
         .param-item strong { font-size: clamp(0.9rem, 1.5vw, 1.15rem); font-weight: 400; font-family: 'Oswald', sans-serif; white-space: nowrap; }
-        .hero-text p { font-size: 1.02rem; color: #E5E5EA; margin-bottom: 40px; max-width: 95%; font-weight: 300; }
+        .hero-text p { font-size: 1.02rem; color: #E5E5EA; max-width: 95%; font-weight: 300; }
  
-        /* ЯРКАЯ КОНТРАСТНАЯ КНОПКА СВЯЗИ */
-        .btn-main-cta {
-            display: inline-flex; align-items: center; gap: 12px;
-            background-color: #ffffff; color: #000000; padding: 16px 35px; border-radius: 30px;
-            text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 1rem; text-transform: uppercase;
-            letter-spacing: 1px; font-weight: 600; transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
-        }
-        .btn-main-cta:hover { background-color: #e5e5e5; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3); }
-        .btn-main-cta svg { width: 16px; height: 16px; fill: currentColor; }
-
         /* 2. ФОРМАТЫ СОТРУДНИЧЕСТВА */
         .offer-section { padding: 90px 0 60px; }
         .section-title {
@@ -127,62 +119,67 @@
         .rule-card h4 { font-size: 1.2rem; margin-bottom: 12px; letter-spacing: 0.5px; font-weight: 400; }
         .rule-card p { color: rgba(255,255,255,0.6); font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
  
-        /* 4. ГАЛЕРЕЯ ПОРТФОЛИО — ИСПРАВЛЕНА СЕТКА ПO ДВЕ В РЯД */
+        /* 4. ПОРТФОЛИО */
         .portfolio-section { padding: 80px 0 60px; border-top: 1px solid var(--border); }
         
         .gallery-grid { 
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Ровно по две фотографии в ряд без сжатия */
-            gap: 30px; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px; 
             margin-bottom: 45px; 
         }
         
         .gallery-item {
             background: #0f0f11; border: 1px solid var(--border); 
-            overflow: hidden; border-radius: 20px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: block;
+            aspect-ratio: 3 / 4; 
         }
-        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .gallery-item:hover img { transform: scale(1.02); }
+        .gallery-item img { 
+            width: 100%; height: 100%; display: block; 
+            object-fit: cover; 
+            object-position: center top;
+            transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+        .gallery-item:hover img { transform: scale(1.03); }
         
-        /* КРУПНЫЙ ТЕКСТ ПОДПИСЕЙ НА ПК */
         .gallery-label {
             position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85)); 
-            padding: 35px 20px 20px 20px; font-family: 'Oswald', sans-serif; 
-            font-size: 1.35rem; letter-spacing: 1px; text-transform: uppercase; color: #fff;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9)); 
+            padding: 30px 15px 15px 15px; font-family: 'Oswald', sans-serif; 
+            font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; color: #fff;
         }
  
-        /* КНОПКА ЯНДЕКС ДИСКА СТАЛА ЯРЧЕ */
+        /* РУБИНОВАЯ КНОПКА ЯНДЕКС ДИСКА */
         .disk-center { text-align: center; margin-top: 60px; }
         .btn-disk {
             display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 22px 60px; border-radius: 30px; background: #ffffff; color: #000000;
+            padding: 20px 55px; border-radius: 30px; background: var(--accent-color); color: #ffffff;
             text-decoration: none; position: relative; opacity: 0; transform: scale(0.92) translateY(20px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.3);
             transition: all 0.4s ease;
         }
         .btn-disk .btn-title {
-            font-family: 'Oswald', sans-serif; font-size: 1.2rem; text-transform: uppercase;
-            letter-spacing: 2px; font-weight: 600; line-height: 1.2; display: flex; align-items: center; gap: 10px;
+            font-family: 'Oswald', sans-serif; font-size: 1.15rem; text-transform: uppercase;
+            letter-spacing: 2px; font-weight: 500; line-height: 1.2; display: flex; align-items: center; gap: 10px;
         }
         .btn-disk .btn-subtitle {
             font-family: 'Manrope', sans-serif; font-size: 0.75rem; text-transform: lowercase;
-            letter-spacing: 1px; color: rgba(0, 0, 0, 0.6); margin-top: 4px; font-weight: 500;
+            letter-spacing: 1px; color: rgba(255, 255, 255, 0.7); margin-top: 4px; font-weight: 400;
         }
-        .btn-disk svg { width: 16px; height: 16px; fill: #000; }
+        .btn-disk svg { width: 16px; height: 16px; fill: #fff; }
  
         .btn-disk.active { opacity: 1; transform: scale(1) translateY(0); }
-        .btn-disk.active.settled:hover { transform: translateY(-4px); background: #e5e5e5; box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3); }
+        .btn-disk.active.settled:hover { transform: translateY(-4px); background: var(--accent-hover); box-shadow: 0 15px 35px rgba(139, 0, 0, 0.5); }
         
-        /* TG КНОПКА */
+        /* КНОПКА СВЯЗИ — ТЕПЕРЬ ОНА ФИКСИРОВАНА НАМЕРТВО И ГОРИТ ВСЕГДА И ВЕЗДЕ */
         .sticky-tg {
-            position: fixed; bottom: 30px; right: 30px; background: var(--text-main); color: #000;
+            position: fixed; bottom: 30px; right: 30px; background: var(--accent-color); color: #fff;
             padding: 14px 30px; border-radius: 30px; font-family: 'Oswald', sans-serif; text-transform: uppercase;
-            font-size: 0.9rem; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 15px 35px rgba(255,255,255,0.1); z-index: 100; letter-spacing: 1px; transition: all 0.3s;
+            font-size: 0.9rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.3); z-index: 9999 !important; letter-spacing: 1px; transition: all 0.3s;
         }
-        .sticky-tg:hover { background: #E5E5EA; transform: translateY(-3px); }
+        .sticky-tg:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(139, 0, 0, 0.5); }
         .sticky-tg svg { width: 16px; height: 16px; fill: currentColor; }
  
         /* КОНТАКТЫ */
@@ -197,16 +194,51 @@
  
         @media (max-width: 1100px) {
             .b2b-grid, .rules-grid { grid-template-columns: 1fr; gap: 20px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); } 
         }
+        
+        /* НАСТРОЙКИ ДЛЯ МОБИЛЬНЫХ ТЕЛЕФОНОВ */
         @media (max-width: 768px) {
-            .hero { flex-direction: column-reverse; padding: 40px 0 60px; text-align: center; gap: 35px; }
-            .hero-image { height: 50vh; width: 100%; border-radius: 20px; }
-            .gallery-grid { grid-template-columns: 1fr; gap: 20px; } /* На мобильных в одну аккуратную колонку */
-            .gallery-label { font-size: 1.1rem; padding: 20px 15px; }
-            .parameters { grid-template-columns: repeat(2, 1fr); gap: 15px 25px; }
-            .offer-section, .rules-section { padding: 50px 0 30px; }
-            .section-title { font-size: 1.8rem; }
-            .sticky-tg { bottom: 20px; right: 20px; padding: 12px 24px; }
+            .hero { flex-direction: column-reverse; padding: 20px 0 40px; text-align: center; gap: 25px; min-height: auto; }
+            .hero-image { height: 55vh; width: 100%; border-radius: 20px; }
+            
+            /* Скрываем параметры по умолчанию на мобилках до начала скролла */
+            .parameters { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px 25px; 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            .parameters.revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } 
+            .gallery-label { font-size: 0.85rem; padding: 15px 8px 8px 8px; }
+            
+            /* 4-я КАРТОЧКА: Работа в паре (Специальный квадратный формат для телефона, убирающий пустоту сверху) */
+            .gallery-item.pair-work {
+                aspect-ratio: 1 / 1 !important;
+            }
+            .gallery-item.pair-work img {
+                object-position: center 15% !important; /* Срезаем лишний верх */
+            }
+            
+            .offer-section, .rules-section { padding: 40px 0 20px; }
+            .section-title { font-size: 1.6rem; }
+            
+            /* Фиксированная кнопка на мобильных — всегда снизу по центру экрана, не пропадает */
+            .sticky-tg { 
+                bottom: 20px; 
+                left: 20px;
+                right: 20px;
+                padding: 14px 20px; 
+                width: calc(100% - 40px); 
+                justify-content: center; 
+            }
+            .disk-center { margin-top: 30px; }
+            .btn-disk { width: 100%; padding: 18px 20px; }
         }
     </style>
 </head>
@@ -224,7 +256,7 @@
                 <div class="city-tag">Новосибирск / Москва / Международные b2b проекты</div>
                 <h1>Роман<br>Санько</h1>
                 
-                <div class="parameters">
+                <div class="parameters" id="model-params">
                     <div class="param-item"><span>Рост</span><strong>183</strong></div>
                     <div class="param-item"><span>Одежда</span><strong>XL (52-54)</strong></div>
                     <div class="param-item"><span>Обувь</span><strong>43 (27.5 см)</strong></div>
@@ -232,11 +264,6 @@
                 </div>
  
                 <p>Профессиональное представление брендов в сегментах Premium, Commercial и Promo. Опыт в банковской сфере, включая руководство подразделениями корпоративного кредитования, обеспечивает глубокое понимание бизнес-этики, развитые ораторские навыки, структурированную речь и способность выступать ключевым амбассадором бренда на статусных b2b-платформах и масштабных форумах.</p>
-            
-                <a href="https://t.me/sankoroman" target="_blank" class="btn-main-cta">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                    Сотрудничество
-                </a>
             </div>
             
             <div class="hero-image">
@@ -306,7 +333,7 @@
                     <div class="gallery-label">Семейная съёмка / Сюжетный кадр</div>
                 </div>
                 
-                <div class="gallery-item">
+                <div class="gallery-item pair-work">
                     <img src="19.jpeg" alt="Модельные тесты">
                     <div class="gallery-label">Модельные тесты / Работа в паре</div>
                 </div>
@@ -329,6 +356,11 @@
                 <div class="gallery-item">
                     <img src="12.jpg" alt="Студийный портрет">
                     <div class="gallery-label">Студийный портрет / Мужской образ</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Основное.jpeg" alt="Премиальный портрет">
+                    <div class="gallery-label">Премиальный портрет / Букинг</div>
                 </div>
 
             </div>
@@ -364,6 +396,19 @@
     </footer>
  
     <script>
+        // Логика появления параметров при скролле (только для мобильных)
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const paramsBlock = document.getElementById('model-params');
+                if (window.scrollY > 45) {
+                    paramsBlock.classList.add('revealed');
+                } else {
+                    paramsBlock.classList.remove('revealed');
+                }
+            }
+        });
+
+        // Основной трекер анимаций блоков
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 const card = entry.target;
