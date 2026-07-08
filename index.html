@@ -18,7 +18,7 @@
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-blur: blur(20px) saturate(140%);
             --glass-hover: rgba(255, 255, 255, 0.15);
-            --accent-color: rgba(139, 0, 0, 0.35); /* Полупрозрачный глубокий рубиновый */
+            --accent-color: rgba(139, 0, 0, 0.35); 
             --accent-hover: rgba(163, 0, 0, 0.6);
             --accent-border: rgba(139, 0, 0, 0.5);
         }
@@ -38,7 +38,6 @@
         h1, h2, h3, h4, .brand-item { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
  
-        /* Базовая плавная анимация появления элементов */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -68,7 +67,6 @@
         }
         .hero-text h1 { font-size: clamp(2.8rem, 5.5vw, 4.5rem); line-height: 1.1; margin-bottom: 35px; font-weight: 600; }
  
-        /* ПАРАМЕТРЫ С ЭФФЕКТОМ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ДЛЯ МОБИЛЬНЫХ */
         .parameters {
             display: grid;
             grid-template-columns: repeat(4, 1fr); 
@@ -147,7 +145,6 @@
             display: block;
         }
 
-        /* Настройка сетки галереи */
         .gallery-grid { 
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
@@ -155,19 +152,17 @@
             margin-bottom: 45px; 
         }
         
-        /* Стили контейнера фотографии */
         .gallery-item {
             background: #0f0f11;
             border: 1px solid var(--border); 
             overflow: hidden; border-radius: 16px; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             display: block;
-            aspect-ratio: 3 / 4; 
+            aspect-ratio: 3 / 4; /* Стандартная журнальная вертикальная пропорция на ПК */
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
-        /* Состояние проявленной фотографии */
         .gallery-item.visible {
             opacity: 1;
             transform: translateY(0);
@@ -182,19 +177,16 @@
         }
         .gallery-item:hover img { transform: scale(1.03); }
         
-        /* ИСПРАВЛЕНИЕ: Жёсткое кадрирование парной съёмки (держим низ, режем верх) */
-        .gallery-item.pair-work {
-            aspect-ratio: 1 / 1 !important; 
-        }
+        /* На ПК парное фото полноразмерное вертикальное, без обрезки */
         .gallery-item.pair-work img {
-            object-position: center bottom !important; /* Сохраняет нижнюю композицию, обрезка уходит наверх */
+            object-position: center top; 
         }
         
-        /* ИСПРАВЛЕНИЕ ПОДПИСИ: Фон стал значительно прозрачнее (0.25) */
+        /* ОБНОВЛЕННЫЕ НАДПИСИ: Текст загорается значительно позже (задержка 0.7s) */
         .gallery-label {
             position: absolute;
             bottom: 15px; left: 15px; right: 15px;
-            background: rgba(30, 30, 35, 0.25); /* Повышенная прозрачность для открытия деталей фото */
+            background: rgba(30, 30, 35, 0.25); /* Прозрачный легкий фон */
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -208,19 +200,18 @@
             text-align: center;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             
-            /* Скрыто по умолчанию для реализации пошагового эффекта */
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s; /* Задержка 0.4 сек, пока встает фото */
+            /* Увеличенная задержка (0.7s) гарантирует появление только после полного раскрытия фото */
+            transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s, transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s;
         }
         
-        /* Проявление подписи следом за фото */
         .gallery-item.visible .gallery-label {
             opacity: 1;
             transform: translateY(0);
         }
  
-        /* ПОЛУПРОЗРАЧНАЯ КРАСНАЯ КНОПКА ЯНДЕКС ДИСКА */
+        /* КНОПКА ЯНДЕКС ДИСКА */
         .disk-center { text-align: center; margin-top: 60px; }
         .btn-disk {
             display: inline-flex;
@@ -248,7 +239,7 @@
         .btn-disk.active { opacity: 1; transform: scale(1) translateY(0); }
         .btn-disk.active.settled:hover { transform: translateY(-4px); background: var(--accent-hover); border-color: rgba(163,0,0,0.8); box-shadow: 0 15px 35px rgba(139, 0, 0, 0.35); }
         
-        /* КНОПКА СВЯЗИ — СТИЛЬНЫЙ БЕЛЫЙ ГЛАСС-ДИЗАЙН, ОНА СПРАВА И ГОРИТ ВСЕГДА */
+        /* СТИЛЬНАЯ КНОПКА СВЯЗИ */
         .sticky-tg {
             position: fixed;
             bottom: 30px; right: 30px; 
@@ -279,7 +270,7 @@
             .gallery-grid { grid-template-columns: repeat(2, 1fr); } 
         }
         
-        /* МОБИЛЬНАЯ ВЕРСИЯ СИТУАТИВНОГО ДИЗАЙНА */
+        /* МОБИЛЬНАЯ ВЕРСИЯ */
         @media (max-width: 768px) {
             .hero { flex-direction: column-reverse; padding: 20px 0 40px; text-align: center; gap: 25px; min-height: auto; }
             .hero-image { height: 55vh; width: 100%; border-radius: 20px; }
@@ -290,14 +281,24 @@
                 opacity: 0; 
                 transform: translateY(20px); 
             }
-            .parameters.revealed {
-                opacity: 1; transform: translateY(0);
-            }
+            .parameters.revealed { opacity: 1; transform: translateY(0); }
             
-            /* КРУПНЫЕ ФОТОГРАФИИ ПО ОДНОЙ ШТУКЕ В РЯД */
-            .gallery-grid { 
-                grid-template-columns: 1fr; gap: 35px; 
-            } 
+            .gallery-grid { grid-template-columns: 1fr; gap: 35px; } 
+            
+            /* ТОЛЬКО НА МОБИЛЬНЫХ: квадратное кадрирование парной съемки (держим низ, режем верх) */
+            .gallery-item.pair-work {
+                aspect-ratio: 1 / 1 !important;
+            }
+            .gallery-item.pair-work img {
+                object-position: center bottom !important; 
+            }
+
+            /* ТОЛЬКО НА МОБИЛЬНЫХ: перенос выбранных подписей НАВЕРХ кадра */
+            .gallery-item.label-top .gallery-label {
+                bottom: auto !important;
+                top: 15px !important;
+                box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
+            }
             
             .gallery-label { 
                 font-size: 0.9rem; padding: 10px 14px; 
@@ -307,17 +308,11 @@
             .offer-section, .rules-section { padding: 40px 0 20px; }
             .section-title { font-size: 1.6rem; }
             
-            .contact-links {
-                flex-direction: column; align-items: center;
-                gap: 20px;
-            }
+            .contact-links { flex-direction: column; align-items: center; gap: 20px; }
             
             .sticky-tg { 
-                bottom: 20px; right: 20px;
-                left: auto; 
-                padding: 12px 24px; 
-                width: auto;
-                font-size: 0.85rem;
+                bottom: 20px; right: 20px; left: auto; 
+                padding: 12px 24px; width: auto; font-size: 0.85rem;
             }
             .disk-center { margin-top: 30px; }
             .btn-disk { width: 100%; padding: 18px 20px; }
@@ -345,7 +340,7 @@
                     <div class="param-item"><span>Типаж</span><strong>Commercial / Premium</strong></div>
                 </div>
  
-                <p>Профессиональное представление брендов в сегментах Premium, Commercial и Promo. Опыт в банковской сфере, включая руководство подразделениями корпоративного кредитования, обеспечивает глубокое понимание бизнес-этики, развитые ораторские навыки, структурированную речь и способность выступать ключевым амбассадором бренда на статусных b2b-платформах и масштабных форумах.</p>
+                <p>Представление брендов в сегментах Premium, Commercial и Promo. Опыт руководства в корпоративном банкинге обеспечивает глубокое понимание бизнес-этики, развитые ораторские навыки и эффективное позиционирование бренда на статусных b2b-платформах и форумах.</p>
             </div>
             
             <div class="hero-image">
@@ -368,7 +363,7 @@
                 </div>
                 <div class="b2b-card scroll-reveal">
                     <h3>Каталоги & Лукбуки</h3>
-                    <p>Позиционирование мужской одежды категорий Casual, Business и Premium для федеральных маркетплейсов, интернет-магазинов и брендовых catalogs. Техничная, быстрая отработка ростовых планов.</p>
+                    <p>Позиционирование мужской одежды категорий Casual, Business и Premium для федеральных маркетплейсов, интернет-магазинов и брендовых каталогов. Техничная, быстрая отработка ростовых планов.</p>
                     <span class="highlight">Lookbook / Каталоги / Маркетплейсы</span>
                 </div>
             </div>
@@ -380,7 +375,7 @@
                 <div class="rule-card scroll-reveal">
                     <div class="rule-number">01</div>
                     <h4>EQ и Речевая культура</h4>
-                    <p>Свободное венение дискуссии, поставленный голос, грамотность речи. Эффективная работа с пулом b2b-клиентов на стендах компании.</p>
+                    <p>Свободное ведение дискуссии, поставленный голос, грамотность речи. Эффективная работа с пулом b2b-клиентов на стендах компании.</p>
                 </div>
                 <div class="rule-card scroll-reveal">
                     <div class="rule-number">02</div>
@@ -403,12 +398,12 @@
             
             <div class="gallery-grid" id="gallery-container">
                 
-                <div class="gallery-item" data-row="1">
+                <div class="gallery-item label-top" data-row="1">
                     <img src="0002.jpeg" alt="Ростовой план">
                     <div class="gallery-label">Ростовой план / Casual стиль</div>
                 </div>
 
-                <div class="gallery-item" data-row="1">
+                <div class="gallery-item label-top" data-row="1">
                     <img src="0181.jpg" alt="Коммерческий портрет">
                     <div class="gallery-label">Мужской образ / Smile-тест</div>
                 </div>
@@ -418,7 +413,7 @@
                     <div class="gallery-label">Семейная съёмка / Сюжетный кадр</div>
                 </div>
                 
-                <div class="gallery-item pair-work" data-row="2">
+                <div class="gallery-item pair-work label-top" data-row="2">
                     <img src="19.jpeg" alt="Модельные тесты">
                     <div class="gallery-label">Модельные тесты / Работа в паре</div>
                 </div>
@@ -481,7 +476,7 @@
     </footer>
  
     <script>
-        // Появление параметров при скролле на смартфонах
+        // Параметры на смартфонах
         window.addEventListener('scroll', () => {
             if (window.innerWidth <= 768) {
                 const paramsBlock = document.getElementById('model-params');
@@ -493,7 +488,7 @@
             }
         });
 
-        // Базовый трекер для простых блоков (Hero, b2b-карточки, контакты)
+        // Базовый трекер для простых блоков
         const baseObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 const card = entry.target;
@@ -514,7 +509,7 @@
  
         document.querySelectorAll('.hero.fade-in, .offer-section .fade-in, .b2b-card, .rules-section .fade-in, .rule-card, .final-contact').forEach((el) => baseObserver.observe(el));
 
-        // ИЗОЛИРОВАННОЕ УПРАВЛЕНИЕ СЕКЦИЕЙ ПОРТФОЛИО
+        // Наблюдатель заголовка портфолио
         const headerObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) entry.target.classList.add('visible');
@@ -523,22 +518,22 @@
         }, {threshold: 0.1});
         headerObserver.observe(document.getElementById('port-head'));
 
-        // Кастомный умный трекер появления для фото и кнопок
+        // Кастомный трекер для фотогалереи
+        const isMobile = window.innerWidth <= 768;
         const galleryObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const el = entry.target;
-                const isMobile = window.innerWidth <= 768;
 
                 if (entry.isIntersecting) {
                     if (el.classList.contains('gallery-item')) {
                         if (!isMobile) {
-                            // На ПК проявляем весь ряд одновременно
+                            // На ПК раскрываем сразу горизонтальный ряд целиком
                             const rowNum = el.getAttribute('data-row');
                             document.querySelectorAll(`.gallery-item[data-row="${rowNum}"]`).forEach(item => {
                                 item.classList.add('visible');
                             });
                         } else {
-                            // На мобильных каждая карточка идет независимо
+                            // На мобильных — строго по одной фотографии по мере докрутки
                             el.classList.add('visible');
                         }
                     }
@@ -546,22 +541,22 @@
                         el.classList.add('active');
                     }
                 } else {
-                    // Скрытие элементов при уходе из видимости
                     if (el.classList.contains('gallery-item')) {
                         el.classList.remove('visible');
                     }
-                    // Если листаем снизу вверх, кнопка держится стабильно, либо перевызывается раньше картинок
+                    // Умное поведение кнопки Яндекс Диска при обратном скролле
                     if (el.id === 'disk-button' && entry.boundingClientRect.top > 0) {
                         el.classList.remove('active');
                     }
                 }
             });
         }, {
-            rootMargin: '0px 0px -10px 0px',
-            threshold: 0.15
+            // На мобильных увеличиваем порог (threshold) и ставим нижний отступ, 
+            // чтобы анимация запускалась позже, когда фото раскрылось на экране
+            rootMargin: isMobile ? '0px 0px -100px 0px' : '0px 0px -10px 0px',
+            threshold: isMobile ? 0.45 : 0.15
         });
 
-        // Привязываем наблюдатель к галерее и кнопке диска
         document.querySelectorAll('.gallery-item, #disk-button').forEach(item => galleryObserver.observe(item));
     </script>
  
